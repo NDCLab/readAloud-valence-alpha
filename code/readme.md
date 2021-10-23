@@ -60,6 +60,10 @@ Sass et al. (2012) found an interesting pattern in valence priming: positive wor
 
 I do not have an explicit prediction on how emotion regulation abilities and state/trait anxiety measures might impact performance, but we may also want to run exploratory analyses that include these measures.
 
+_Prediction 3_
+
+[PLACEHOLDER FOR DETAIL ON POST-ERROR BEHAVIOR PREDICTION]
+
 _LDT Replication Analysis_
 
 The data can be analyzed five ways:
