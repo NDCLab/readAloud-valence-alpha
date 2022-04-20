@@ -7,4 +7,4 @@ In all cases, and in the interest of transparency, a single notebook should be u
 
 
 ### Project Notes
-The notebook can be viewed [here](INSERT YOUR LINK).
+The notebook can be viewed [here](https://github.com/NDCLab/readAloud-valence-alpha/issues/1).
