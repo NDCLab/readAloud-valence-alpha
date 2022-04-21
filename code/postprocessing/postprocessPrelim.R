@@ -39,7 +39,7 @@ pitchDat <- read.csv(pitch_file, stringsAsFactors = FALSE, na.strings=c("", "NA"
 disfluenciesDat <- read.csv(disfluencies_file, stringsAsFactors = FALSE, na.strings=c("", "NA"))
 
 #create dataframes for storing output data and define output file name
-prelimPassageSummaryDat <- data.frame(matrix(ncol=30, nrow=0))
+prelimPassageSummaryDat <- data.frame(matrix(ncol=31, nrow=0))
 colnames(prelimPassageSummaryDat) <- c("id",
                                        "demo_b_sex",
                                        "demo_b_eng",
@@ -53,8 +53,9 @@ colnames(prelimPassageSummaryDat) <- c("id",
                                        "phq8_scrdTotal",
                                        "challengeAcc",
                                        "passage",
-                                       "liwcScore",
                                        "PosOrNeg",
+                                       "liwcScore",
+                                       "warrinerAvg",
                                        "syllPerSec_firstHalf",
                                        "syllPerSec_prePREswitch",
                                        "syllPerSec_preswitch",
@@ -72,7 +73,7 @@ colnames(prelimPassageSummaryDat) <- c("id",
                                        "percDisfluent_postswitch")
 prelimPassage_out <- paste("postprocess_subject-by-passage_", today, ".csv", sep="", collapse=NULL)
 
-prelimSubjectSummaryDat <- data.frame(matrix(ncol=29, nrow=0))
+prelimSubjectSummaryDat <- data.frame(matrix(ncol=30, nrow=0))
 colnames(prelimSubjectSummaryDat) <- colnames(prelimPassageSummaryDat)[-13] #drop only 'passage' as collapsing across passages
 prelimSubject_out <- paste("postprocess_subject-by-valence_", today, ".csv", sep="", collapse=NULL)
 
@@ -105,8 +106,14 @@ for(i in 1:length(subs)){
   for (j in 1:nrow(timingDatTrim)){
     passage <- timingDatTrim$passage[j]
     passagechars_row <- match(passage, passageDat$passage)
-    liwcScore <- passageDat$emoToneALL[passagechars_row]
     PosOrNeg <- passageDat$switchType[passagechars_row]
+    if (PosOrNeg == "pos2neg"){
+      liwcScore <- passageDat$emoTonePOS[passagechars_row]
+      warrinerAvg <- passageDat$posAvgWAR[passagechars_row]
+    } else {
+      liwcScore <- passageDat$emoToneNEG[passagechars_row]
+      warrinerAvg <- passageDat$negAvgWAR[passagechars_row]
+    }
     
     passage_timing_row <- match(passage, timingDatTrim$passage)
     syllPerSec_firstHalf <- timingDatTrim$syllPerSec_firstHalf[passage_timing_row]
@@ -143,8 +150,9 @@ for(i in 1:length(subs)){
                                                                     phq8_scrdTotal,
                                                                     challengeAcc,
                                                                     passage,
-                                                                    liwcScore,
                                                                     PosOrNeg,
+                                                                    liwcScore,
+                                                                    warrinerAvg,
                                                                     syllPerSec_firstHalf,
                                                                     syllPerSec_prePREswitch,
                                                                     syllPerSec_preswitch,
@@ -185,8 +193,9 @@ for(k in 1:length(subs)){
     subMood <- subjectDatVal$subMood[1]
     phq8_scrdTotal <- subjectDatVal$phq8_scrdTotal[1]
     challengeAcc <- subjectDatVal$challengeAcc[1]
-    liwcScore <- mean(as.numeric(subjectDatVal$liwcScore))
     PosOrNeg <- switchTypes[n]
+    liwcScore <- mean(as.numeric(subjectDatVal$liwcScore))
+    liwcScore <- mean(as.numeric(subjectDatVal$warrinerAvg))
     syllPerSec_firstHalf <- mean(as.numeric(subjectDatVal$syllPerSec_firstHalf))
     syllPerSec_prePREswitch <- mean(as.numeric(subjectDatVal$syllPerSec_prePREswitch))
     syllPerSec_preswitch <- mean(as.numeric(subjectDatVal$syllPerSec_preswitch))
@@ -216,8 +225,9 @@ for(k in 1:length(subs)){
                                                                     subMood,
                                                                     phq8_scrdTotal,
                                                                     challengeAcc,
-                                                                    liwcScore,
                                                                     PosOrNeg,
+                                                                    liwcScore,
+                                                                    warrinerAvg,
                                                                     syllPerSec_firstHalf,
                                                                     syllPerSec_prePREswitch,
                                                                     syllPerSec_preswitch,

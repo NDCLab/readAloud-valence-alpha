@@ -14,6 +14,7 @@ library(ggplot2)
 
 ## independent variables
 ## liwcScore : emotional tone rating from LIWC for the first half of the passage (continuous)
+## warrinerAvg : average of lexical valence scores from Warriner et al. 2013 (continuous)
 ## PosOrNeg : indication of whether the first passage half is positive or negative (categorical: pos2neg, neg2pos)
 
 ## dependent variables
@@ -41,7 +42,7 @@ ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch_firstHalf)) + geom_boxplot()
 # model
 t.test(DATA[DATA$PosOrNeg=="pos2neg",]$vocalPitch_firstHalf, DATA[DATA$PosOrNeg=="neg2pos",]$vocalPitch_firstHalf, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
-###### continuous independent variables
+###### continuous independent variables (LIWC)
 # syllPerSec ~ liwcScore x PreOrPost
 # plot
 ggplot(data=DATA, aes(x=liwcScore, y=syllPerSec_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
@@ -63,6 +64,28 @@ ggplot(data=DATA, aes(x=liwcScore, y=vocalPitch_firstHalf)) + geom_point() + geo
 lm(vocalPitch_firstHalf ~ liwcScore, data=DATA)
 # individual t-tests TBD
 
+###### continuous independent variables (Warriner)
+# syllPerSec ~ warrinerAvg x PreOrPost
+# plot
+ggplot(data=DATA, aes(x=warrinerAvg, y=syllPerSec_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
+# model
+lm(syllPerSec_firstHalf ~ warrinerAvg, data=DATA)
+# individual t-tests TBD
+
+# percDisfluent ~ warrinerAvg x PreOrPost
+# plot
+ggplot(data=DATA, aes(x=warrinerAvg, y=percDisfluent_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
+# model
+lm(percDisfluent_firstHalf ~ warrinerAvg, data=DATA)
+# individual t-tests TBD
+
+# vocalPitch ~ warrinerAvg x PreOrPost
+# plot
+ggplot(data=DATA, aes(x=warrinerAvg, y=vocalPitch_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
+# model
+lm(vocalPitch_firstHalf ~ warrinerAvg, data=DATA)
+# individual t-tests TBD
+
 
 ### EFFECT OF PASSAGE VALENCE AND MOOD CONGRUENCY ON READING BEHAVIOR (WITHIN-SUBJECT)
 ### Hypothesis 1B:
@@ -74,6 +97,7 @@ lm(vocalPitch_firstHalf ~ liwcScore, data=DATA)
 
 ## independent variables
 ## liwcScore : emotional tone rating from LIWC for the passage half (continuous)
+## warrinerAvg : average of lexical valence scores from Warriner et al. 2013 (continuous)
 ## PosOrNeg : indication of whether the passage half is positive or negative (categorical: pos2neg, neg2pos)
 ## bmis_scrdVal : participant mood score (continuous)
 ## subMood : indication of whether participant mood falls above/below the midmark on bmis_scrdVal (categorical: posMood, negMood)
@@ -106,7 +130,7 @@ aov(vocalPitch_firstHalf ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
 
-###### continuous independent variables
+###### continuous independent variables (LIWC)
 # syllPerSec ~ liwcScore x bmis_scrdVal
 # plot
 ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=syllPerSec_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
@@ -126,6 +150,28 @@ lm(percDisfluent_firstHalf ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal +
 ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=vocalPitch_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
 # model
 lm(vocalPitch_firstHalf ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
+# individual t-tests TBD
+
+###### continuous independent variables (Warriner)
+# syllPerSec ~ warrinerAvg x bmis_scrdVal
+# plot
+ggplot(data=DATA, aes(x=warrinerAvg, y=bmis_scrdVal, color=syllPerSec_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
+# model
+lm(syllPerSec_firstHalf ~ warrinerAvg + bmis_scrdVal + warrinerAvg:bmis_scrdVal + 0, data=DATA)
+# individual t-tests TBD
+
+# percDisfluent ~ warrinerAvg x bmis_scrdVal
+# plot
+ggplot(data=DATA, aes(x=warrinerAvg, y=bmis_scrdVal, color=percDisfluent_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
+# model
+lm(percDisfluent_firstHalf ~ warrinerAvg + bmis_scrdVal + warrinerAvg:bmis_scrdVal + 0, data=DATA)
+# individual t-tests TBD
+
+# vocalPitch ~ warrinerAvg x bmis_scrdVal
+# plot
+ggplot(data=DATA, aes(x=warrinerAvg, y=bmis_scrdVal, color=vocalPitch_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
+# model
+lm(vocalPitch_firstHalf ~ warrinerAvg + bmis_scrdVal + warrinerAvg:bmis_scrdVal + 0, data=DATA)
 # individual t-tests TBD
 
 
