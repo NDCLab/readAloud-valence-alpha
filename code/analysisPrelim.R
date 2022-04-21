@@ -1,6 +1,10 @@
 # Preliminary Analyses: readAloud-valence-alpha
 # Author: Jessica M. Alexander
-# Last Updated: 2022-04-19
+# Last Updated: 2022-04-21
+
+### SETTING UP
+library(ggplot2)
+
 
 ### GENERAL EFFECT OF PASSAGE VALENCE ON READING BEHAVIOR (BETWEEN-SUBJECT)
 ### Hypothesis 1A:
@@ -13,50 +17,50 @@
 ## PosOrNeg : indication of whether the first passage half is positive or negative (categorical: pos2neg, neg2pos)
 
 ## dependent variables
-## syllPerSec : syllables coded for the passage half / length of reading in seconds (continuous)
-## percDisfluent : number of syllables produced with some kind of disfluency / syllables coded for the passage half (continuous)
-## vocalPitch : pitch rating from Praat for the passage half (continuous)
+## syllPerSec_firstHalf : syllables coded for the first passage half / length of reading in seconds (continuous)
+## percDisfluent_firstHalf : number of syllables produced with some kind of disfluency / syllables coded for the first passage half (continuous)
+## vocalPitch_firstHalf : pitch rating from Praat for the first passage half (continuous)
 
 
 ###### categorical independent variables
 # syllPerSec ~ PosOrNeg
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec_firstHalf)) + geom_boxplot()
 # model
-t.test(DATA[PosOrNeg=="pos2neg"]$syllPerSec, DATA[PosOrNeg=="neg2pos"]$syllPerSec, alternative="two-sided", paired=FALSE, conf.level=0.95)
+t.test(DATA[DATA$PosOrNeg=="pos2neg",]$syllPerSec_firstHalf, DATA[DATA$PosOrNeg=="neg2pos",]$syllPerSec_firstHalf, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
 # percDisfluent ~ PosOrNeg
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent_firstHalf)) + geom_boxplot()
 # model
-t.test(DATA[PosOrNeg=="pos2neg"]$percDisfluent, DATA[PosOrNeg=="neg2pos"]$percDisfluent, alternative="two-sided", paired=FALSE, conf.level=0.95)
+t.test(DATA[DATA$PosOrNeg=="pos2neg",]$percDisfluent_firstHalf, DATA[DATA$PosOrNeg=="neg2pos",]$percDisfluent_firstHalf, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
 # vocalPitch ~ PosOrNeg
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch_firstHalf)) + geom_boxplot()
 # model
-t.test(DATA[PosOrNeg=="pos2neg"]$vocalPitch, DATA[PosOrNeg=="neg2pos"]$vocalPitch, alternative="two-sided", paired=FALSE, conf.level=0.95)
+t.test(DATA[DATA$PosOrNeg=="pos2neg",]$vocalPitch_firstHalf, DATA[DATA$PosOrNeg=="neg2pos",]$vocalPitch_firstHalf, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
 ###### continuous independent variables
 # syllPerSec ~ liwcScore x PreOrPost
 # plot
-ggplot(data=DATA, aes(x=liwcScore, y=syllPerSec)) + geom_point() + geom_smooth(method="lm", se=FALSE)
+ggplot(data=DATA, aes(x=liwcScore, y=syllPerSec_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
 # model
-lm(syllPerSec ~ liwcScore, data=DATA)
+lm(syllPerSec_firstHalf ~ liwcScore, data=DATA)
 # individual t-tests TBD
 
 # percDisfluent ~ liwcScore x PreOrPost
 # plot
-ggplot(data=DATA, aes(x=liwcScore, y=percDisfluent)) + geom_point() + geom_smooth(method="lm", se=FALSE)
+ggplot(data=DATA, aes(x=liwcScore, y=percDisfluent_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
 # model
-lm(percDisfluent ~ liwcScore, data=DATA)
+lm(percDisfluent_firstHalf ~ liwcScore, data=DATA)
 # individual t-tests TBD
 
 # vocalPitch ~ liwcScore x PreOrPost
 # plot
-ggplot(data=DATA, aes(x=liwcScore, y=vocalPitch)) + geom_point() + geom_smooth(method="lm", se=FALSE)
+ggplot(data=DATA, aes(x=liwcScore, y=vocalPitch_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE)
 # model
-lm(vocalPitch ~ liwcScore, data=DATA)
+lm(vocalPitch_firstHalf ~ liwcScore, data=DATA)
 # individual t-tests TBD
 
 
@@ -72,56 +76,56 @@ lm(vocalPitch ~ liwcScore, data=DATA)
 ## liwcScore : emotional tone rating from LIWC for the passage half (continuous)
 ## PosOrNeg : indication of whether the passage half is positive or negative (categorical: pos2neg, neg2pos)
 ## bmis_scrdVal : participant mood score (continuous)
-## SubjectMood : indication of whether participant mood falls above/below the midmark on bmis_scrdVal (categorical: posMood, negMood)
+## subMood : indication of whether participant mood falls above/below the midmark on bmis_scrdVal (categorical: posMood, negMood)
 
 ## dependent variables
-## syllPerSec : syllables coded for the passage half / length of reading in seconds (continuous)
-## percDisfluent : number of syllables produced with some kind of disfluency / syllables coded for the passage half (continuous)
-## vocalPitch : pitch rating from Praat for the passage half (continuous)
+## syllPerSec_firstHalf : syllables coded for the first passage half / length of reading in seconds (continuous)
+## percDisfluent_firstHalf : number of syllables produced with some kind of disfluency / syllables coded for the first passage half (continuous)
+## vocalPitch_firstHalf : pitch rating from Praat for the first passage half (continuous)
 
 ###### categorical independent variables
-# syllPerSec ~ PosOrNeg x SubjectMood
+# syllPerSec ~ PosOrNeg x subMood
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec, fill=SubjectMood)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec_firstHalf, fill=subMood)) + geom_boxplot()
 # model
-aov(syllPerSec ~ PosOrNeg + SubjectMood, data=DATA)
+aov(syllPerSec_firstHalf ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
-# percDisfluent ~ PosOrNeg x SubjectMood
+# percDisfluent ~ PosOrNeg x subMood
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent, fill=SubjectMood)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent_firstHalf, fill=subMood)) + geom_boxplot()
 # model
-aov(percDisfluent ~ PosOrNeg + SubjectMood, data=DATA)
+aov(percDisfluent_firstHalf ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
-# vocalPitch ~ PosOrNeg x SubjectMood
+# vocalPitch ~ PosOrNeg x subMood
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch, fill=SubjectMood)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch_firstHalf, fill=subMood)) + geom_boxplot()
 # model
-aov(vocalPitch ~ PosOrNeg + SubjectMood, data=DATA)
+aov(vocalPitch_firstHalf ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
 
 ###### continuous independent variables
 # syllPerSec ~ liwcScore x bmis_scrdVal
 # plot
-ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=syllPerSec)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
+ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=syllPerSec_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
 # model
-lm(syllPerSec ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
+lm(syllPerSec_firstHalf ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
 # individual t-tests TBD
 
 # percDisfluent ~ liwcScore x bmis_scrdVal
 # plot
-ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=percDisfluent)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
+ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=percDisfluent_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
 # model
-lm(percDisfluent ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
+lm(percDisfluent_firstHalf ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
 # individual t-tests TBD
 
 # vocalPitch ~ liwcScore x bmis_scrdVal
 # plot
-ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=vocalPitch)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
+ggplot(data=DATA, aes(x=liwcScore, y=bmis_scrdVal, color=vocalPitch_firstHalf)) + geom_point() + geom_smooth(method="lm", se=FALSE) + scale_color_viridis()
 # model
-lm(vocalPitch ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
+lm(vocalPitch_firstHalf ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA)
 # individual t-tests TBD
 
 
@@ -132,53 +136,53 @@ lm(vocalPitch ~ liwcScore + bmis_scrdVal + liwcScore:bmis_scrdVal + 0, data=DATA
 
 ## independent variables
 ## PosOrNeg : indication of the directionality of the passage switch (categorical: pos2neg, neg2pos)
-## SubjectMood : indication of whether participant mood falls above/below the midmark on bmis_scrdVal (categorical: posMood, negMood)
+## subMood : indication of whether participant mood falls above/below the midmark on bmis_scrdVal (categorical: posMood, negMood)
 
 ## dependent variables
-## syllPerSec : syllables coded for the switch group / length of reading in seconds (continuous)
-## percDisfluent : number of syllables produced with some kind of disfluency / syllables coded for the switch group (continuous)
-## vocalPitch : pitch rating from Praat for the switch group (continuous)
+## syllPerSec_switch : syllables coded for the switch group / length of reading in seconds (continuous)
+## percDisfluent_switch : number of syllables produced with some kind of disfluency / syllables coded for the switch group (continuous)
+## vocalPitch_switch : pitch rating from Praat for the switch group (continuous)
 
-# straight comparison of switches
+# straight comparison of pos2neg and neg2pos switch groups
 #syllPerSec
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec_switch)) + geom_boxplot()
 # model
-t.test(DATA[PosOrNeg=="pos2neg"]$syllPerSec, DATA[PosOrNeg=="neg2pos"]$syllPerSec, alternative="two-sided", paired=FALSE, conf.level=0.95)
+t.test(DATA[DATA$PosOrNeg=="pos2neg",]$syllPerSec_switch, DATA[DATA$PosOrNeg=="neg2pos",]$syllPerSec_switch, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
 #percDisfluent
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent_switch)) + geom_boxplot()
 # model
-t.test(DATA[PosOrNeg=="pos2neg"]$percDisfluent, DATA[PosOrNeg=="neg2pos"]$percDisfluent, alternative="two-sided", paired=FALSE, conf.level=0.95)
+t.test(DATA[DATA$PosOrNeg=="pos2neg",]$percDisfluent_switch, DATA[DATA$PosOrNeg=="neg2pos",]$percDisfluent_switch, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
 #vocalPitch
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch_switch)) + geom_boxplot()
 # model
-t.test(DATA[PosOrNeg=="pos2neg"]$vocalPitch, DATA[PosOrNeg=="neg2pos"]$vocalPitch, alternative="two-sided", paired=FALSE, conf.level=0.95)
+t.test(DATA[DATA$PosOrNeg=="pos2neg",]$vocalPitch_switch, DATA[DATA$PosOrNeg=="neg2pos",]$vocalPitch_switch, alternative="two.sided", paired=FALSE, conf.level=0.95)
 
 
 # mood-congruency on switches
 #syllPerSec
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec, fill=SubjectMood)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=syllPerSec_switch, fill=subMood)) + geom_boxplot()
 # model
-aov(syllPerSec ~ PosOrNeg + SubjectMood, data=DATA)
+aov(syllPerSec_switch ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
 #percDisfluent
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent, fill=SubjectMood)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=percDisfluent_switch, fill=subMood)) + geom_boxplot()
 # model
-aov(percDisfluent ~ PosOrNeg + SubjectMood, data=DATA)
+aov(percDisfluent_switch ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
 #vocalPitch
 # plot
-ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch, fill=SubjectMood)) + geom_boxplot()
+ggplot(data=DATA, aes(x=PosOrNeg, y=vocalPitch_switch, fill=subMood)) + geom_boxplot()
 # model
-aov(vocalPitch ~ PosOrNeg + SubjectMood, data=DATA)
+aov(vocalPitch_switch ~ PosOrNeg + subMood, data=DATA)
 # post-hoc comparisons TBD
 
 
