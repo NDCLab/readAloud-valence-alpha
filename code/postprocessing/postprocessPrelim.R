@@ -1,6 +1,6 @@
 # Preliminary Analyses: readAloud-valence-alpha
 # Author: Jessica M. Alexander
-# Last Updated: 2022-04-21
+# Last Updated: 2022-04-22
 
 ### SECTION 1: SETTING UP
 library(readxl)
@@ -31,7 +31,7 @@ disfluencies_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivativ
 out_path <- '/Users/jalexand/github/readAloud-valence-alpha/derivatives/'
 
 #load data files
-passageDat <- read.xlsx(passagechar_file, sheet="passages")
+passageDat <- read_xlsx(passagechar_file, sheet="passages")
 redcapDat <- read.csv(redcap_file, stringsAsFactors = FALSE, na.strings=c("", "NA"))
 challengeDat <- read.csv(challengeAcc_file, stringsAsFactors = FALSE, na.strings=c("", "NA"))
 timingDat <- read.csv(timing_file, stringsAsFactors = FALSE, na.strings=c("", "NA"))
@@ -195,7 +195,7 @@ for(k in 1:length(subs)){
     challengeAcc <- subjectDatVal$challengeAcc[1]
     PosOrNeg <- switchTypes[n]
     liwcScore <- mean(as.numeric(subjectDatVal$liwcScore))
-    liwcScore <- mean(as.numeric(subjectDatVal$warrinerAvg))
+    warrinerAvg <- mean(as.numeric(subjectDatVal$warrinerAvg))
     syllPerSec_firstHalf <- mean(as.numeric(subjectDatVal$syllPerSec_firstHalf))
     syllPerSec_prePREswitch <- mean(as.numeric(subjectDatVal$syllPerSec_prePREswitch))
     syllPerSec_preswitch <- mean(as.numeric(subjectDatVal$syllPerSec_preswitch))
