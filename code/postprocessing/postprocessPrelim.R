@@ -5,9 +5,6 @@
 ### SECTION 1: SETTING UP
 library(readxl)
 
-#select participants to include in output file
-subs <- c(150001, 150004)
-
 #set up date for output file naming
 today <- Sys.Date()
 today <- format(today, "%Y%m%d")
@@ -16,18 +13,18 @@ today <- format(today, "%Y%m%d")
 #hpc
 #passagechar_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/materials/readAloud-ldt/stimuli/readAloud/readAloud-stimuli_characteristics.xlsx'
 #redcap_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/sourcedata/checked/redcap/202201v0readAloudval_DATA_2022-04-20_0854.csv'
-#challengeAcc_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/readAloud_subject-level_summary_20220419.csv'
-#timing_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/timing_subject-by-passage_20220419.csv'
-#pitch_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/pitch_subject-by-passage_20220419.csv''
-#disfluencies_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/disfluencies_subject-by-passage_20220419.csv'
+#challengeAcc_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/readAloud_subject-level_summary_20220422.csv'
+#timing_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/timing_subject-by-passage_20220422.csv'
+#pitch_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/pitch_subject-by-passage_20220422.csv''
+#disfluencies_file <- '/home/data/NDClab/datasets/readAloud-valence-dataset/derivatives/preprocessed/disfluencies_subject-by-passage_20220422.csv'
 #out_path <- '/home/data/NDClab/datasets/readAloud-valence-alpha/derivatives/'
 #local
 passagechar_file <- '/Users/jalexand/github/readAloud-valence-dataset/materials/readAloud-ldt/stimuli/readAloud/readAloud-stimuli_characteristics.xlsx'
 redcap_file <- '/Users/jalexand/github/readAloud-valence-dataset/sourcedata/checked/redcap/202201v0readAloudval_DATA_2022-04-20_0854.csv'
-challengeAcc_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/readAloud_subject-level_summary_20220419.csv'
-timing_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/timing_subject-by-passage_20220419.csv'
-pitch_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/pitch_subject-by-passage_20220419.csv'
-disfluencies_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/disfluencies_subject-by-passage_20220419.csv'
+challengeAcc_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/readAloud_subject-level_summary_20220422.csv'
+timing_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/timing_subject-by-passage_20220422.csv'
+pitch_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/pitch_subject-by-passage_20220422.csv'
+disfluencies_file <- '/Users/jalexand/github/readAloud-valence-dataset/derivatives/preprocessed/disfluencies_subject-by-passage_20220422.csv'
 out_path <- '/Users/jalexand/github/readAloud-valence-alpha/derivatives/'
 
 #load data files
@@ -77,7 +74,40 @@ prelimSubjectSummaryDat <- data.frame(matrix(ncol=30, nrow=0))
 colnames(prelimSubjectSummaryDat) <- colnames(prelimPassageSummaryDat)[-13] #drop only 'passage' as collapsing across passages
 prelimSubject_out <- paste("postprocess_subject-by-valence_", today, ".csv", sep="", collapse=NULL)
 
-### SECTION 2: START PARTICIPANT LOOP AND READ IN PARTICIPANT DATA
+### SECTION 2: SELECT PARTICIPANTS TO INCLUDE IN OUTPUT FILE
+#manual selection for inclusion for debugging/prelim analyses
+subs <- c(150004, 150005)
+#automatic exclusion--currently in debugging
+#subs <- c()
+#for (a in 1:nrow(challengeDat)){
+#  id <- challengeDat$id[a]
+#  redcap_row <- match(id, redcapDat$record_id)
+#  bmis_timestamp <- as.numeric(as.POSIXct(redcapDat$bmis_s1_r1_e1_timestamp[redcap_row]))
+#  readaloud_timestamp <- as.numeric(as.POSIXct(redcapDat$readaloudvalo_s1_r1_e1_timestamp[redcap_row]))
+#  taskdelay <- (readaloud_timestamp - bmis_timestamp)/60 #gives number of minutes btwn completing bmis questionnaire and completing study tasks
+#  
+#  langhis <- redcapDat$demo_b_langhis_s1_r1_e1[redcap_row]
+#  diagkidnow <- redcapDat$demo_b_diagkidnow_s1_r1_e1[redcap_row]
+#  diateennow <- redcapDat$demo_b_diateennow_s1_r1_e1[redcap_row]
+#  diagadnow <- redcapDat$demo_b_diagadnow_s1_r1_e1[redcap_row]
+#  phq8score <- redcapDat$phq8_scrdTotal_s1_r1_e1[redcap_row]
+#  
+#  challengeacc <- challengeDat$challengeAccuracy[match(id, challengeDat$id)]
+#  
+#  if(taskdelay<180 &
+#  (langhis==1 | langhis==3) &
+#  is.na(diagkidnow) & is.na(diateennow) & is.na(diagadnow) &
+#  phq8score<10 &
+#  challengeacc>0.7){
+#    subs <- c(subs, id)
+#  } else {
+#    next
+#  }
+#}
+
+
+
+### SECTION 3: START PARTICIPANT LOOP AND READ IN PARTICIPANT DATA
 for(i in 1:length(subs)){
   id <- subs[i]
   redcap_row <- match(id, redcapDat$record_id)
@@ -97,12 +127,12 @@ for(i in 1:length(subs)){
   
   challengeAcc <- challengeDat[match(id, challengeDat$id),2]
   
-  ### SECTION 3: TRIM PREPROCESSED FILES DOWN TO SUBJECT ID
+  ### SECTION 4: TRIM PREPROCESSED FILES DOWN TO SUBJECT ID
   timingDatTrim <- timingDat[timingDat$id==id,]
   pitchDatTrim <- pitchDat[timingDat$id==id,]
   disfluenciesDatTrim <- disfluenciesDat[timingDat$id==id,]
   
-  ### SECTION 4: START PASSAGE LOOP AND READ IN PASSAGE CHARACTERISTICS AND BEHAVIORAL DATA
+  ### SECTION 5: START PASSAGE LOOP AND READ IN PASSAGE CHARACTERISTICS AND BEHAVIORAL DATA
   for (j in 1:nrow(timingDatTrim)){
     passage <- timingDatTrim$passage[j]
     passagechars_row <- match(passage, passageDat$passage)
@@ -136,7 +166,7 @@ for(i in 1:length(subs)){
     percDisfluent_switch <- disfluenciesDatTrim$percDisfluent_switch[passage_disfluences_row]
     percDisfluent_postswitch <- disfluenciesDatTrim$percDisfluent_postswitch[passage_disfluences_row]
     
-    ### SECTION 4: STORE OUTPUT DATA IN SUMMARY MATRIX
+    ### SECTION 6: STORE OUTPUT DATA IN SUMMARY MATRIX
     prelimPassageSummaryDat[nrow(prelimPassageSummaryDat) + 1,] <-c(id,
                                                                     demo_b_sex,
                                                                     demo_b_eng,
@@ -172,7 +202,7 @@ for(i in 1:length(subs)){
 }
 
 
-### SECTION 5: LOOP BACK OVER SUBJECTS TO COLLAPSE prelimPassageSummaryDat ACROSS PASSAGES
+### SECTION 7: LOOP BACK OVER SUBJECTS TO COLLAPSE prelimPassageSummaryDat ACROSS PASSAGES
 for(k in 1:length(subs)){
   subjectDat <- prelimPassageSummaryDat[prelimPassageSummaryDat$id==subs[k],]
   
@@ -247,7 +277,7 @@ for(k in 1:length(subs)){
   }
 }
 
-### SECTION 6: OUTPUT DATA
+### SECTION 8: OUTPUT DATA
 #write the extracted summary scores to CSV
 write.csv(prelimPassageSummaryDat, paste(out_path, prelimPassage_out, sep = "", collapse = NULL), row.names=FALSE)
 write.csv(prelimSubjectSummaryDat, paste(out_path, prelimSubject_out, sep = "", collapse = NULL), row.names=FALSE)
