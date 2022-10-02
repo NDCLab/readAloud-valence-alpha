@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analyses
 # Author: Jessica M. Alexander
-# Last Updated: 2022-10-01
+# Last Updated: 2022-10-02
 
 ### SECTION 1: SETTING UP
 library(ggplot2)
@@ -262,28 +262,29 @@ summary(modelReadSpeed)
 
 interact_plot(modelReadSpeed, pred = freq_gmc, modx = position,
               plot.points = TRUE, jitter=0.01, point.alpha=0.1, colors=c("#dd5e66", "#0d0887"), interval=TRUE, vary.lty=FALSE,
-              main.title = "Effect of Word Frequency\nand Passage Position\non Reading Speed",
+              main.title = "Effect of Word Frequency and\nPassage Position on Reading Speed",
               x.label="Average Log Frequency (centered)", y.label="Reading Speed (syllables per second)",
               legend.main = "Passage Position", modx.labels = c("Postswitch", "Preswitch")) +
               theme(plot.title = element_text(color="black", hjust = 0.5, size= 20), strip.text = element_text(color="black"),
               legend.title = element_text(color="black"), legend.text = element_text(color="black"),
               legend.position = c(0.82, 0.15), legend.background = element_rect(fill="white", color="black"),
-              axis.title.x = element_text(color="black"), axis.title.y = element_text(color="black"),
-              axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-              annotate("text", label="*significant frequency × position (pre/post) interaction\n(p = 0.0000000000000002)", x=-0.1, y=1.5, size=3.5)
+              axis.title.x = element_text(color="black", size=13), axis.title.y = element_text(color="black", size=13),
+              axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
+              annotate("text", label="*significant frequency × position (pre/post) interaction\n(p < 0.001)", x=-0.1, y=1.8, size=3.5)
 #ggsave(paste(out_path, "plot1", "_", today, ".png", sep="", collapse=NULL))
 
 interact_plot(modelReadSpeed, pred = freq_gmc, modx = val_gmc, plot.points = TRUE, jitter=0.01,
               point.alpha=0.1, colors=c("#f79044", "#dd5e66", "#0d0887"), interval=TRUE, vary.lty=FALSE,
-              main.title = "Effect of Lexical Valence\nand Word Frequency\non Reading Speed",
+              main.title = "Effect of Lexical Valence and\nWord Frequency on Reading Speed",
               x.label="Average Log Frequency (centered)", y.label="Reading Speed (syllables per second)", legend.main = "Valence") +
               theme(plot.title = element_text(color="black", hjust = 0.5, size= 20),
               legend.title = element_text(color="black"), legend.text = element_text(color="black"),
               legend.position = c(0.8, 0.17), legend.background = element_rect(fill="white", color="black"),
-              axis.title.x = element_text(color="black"), axis.title.y = element_text(color="black"),
-              axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  annotate("text", label="*significant valence × frequency interaction\n(p = 0.000000000000000233)", x=-0.1, y=1.9, size=3.5)
+              axis.title.x = element_text(color="black", size=13), axis.title.y = element_text(color="black", size=13),
+              axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
+  annotate("text", label="*significant valence × frequency interaction\n(p < 0.001)", x=-0.1, y=1.8, size=3.5)
 #ggsave(paste(out_path, "plot2", "_", today, ".png", sep="", collapse=NULL))
+
 
 #create df and model for Johnson-Neyman intervals, which requires numeric (not factor) predictors
 timeDatTrimJN <- timeDatTrim
@@ -406,7 +407,9 @@ ggplot(pitchDatTrimFPlot) + aes(x=position, y=pitch, fill=position, color=positi
   geom_beeswarm(cex=1.5, size=1.0, dodge.width=1.0, alpha=0.5, show.legend = FALSE) +
   geom_boxplot(width = 0.25, alpha=1, outlier.size=1.0, color="black", show.legend = FALSE) +
   theme_classic() + theme(plot.title = element_text(hjust = 0.5, size= 20, face="bold"),
-                          plot.subtitle = element_text(hjust = 0.5, size= 11)) +
+                          plot.subtitle = element_text(hjust = 0.5, size= 11),
+                          axis.title.x = element_text(color="black", size=13, face="bold"), axis.title.y = element_text(color="black", size=13, face="bold"),
+                          axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
   ggtitle('Effect of Passage Position\non Vocal Pitch') +
   labs(subtitle = '(Female Participants Only)') +
   ylab('Average Vocal Pitch (Hz)') +
@@ -470,15 +473,15 @@ summary(modelReadAcc)
 
 interact_plot(modelReadAcc, pred = freq_gmc, modx = position,
               plot.points = TRUE, jitter=0.01, point.alpha=0.1, colors=c("#dd5e66", "#0d0887"), interval=TRUE, vary.lty=FALSE,
-              main.title = "Effect of Word Frequency\nand Passage Position\non Content Question Accuracy",
+              main.title = "Effect of Word Frequency and Passage\nPosition on Content Question Accuracy",
               x.label="Average Log Frequency (centered)", y.label="Challenge Accuracy",
               legend.main = "Passage Position", modx.labels = c("Postswitch", "Preswitch")) +
               theme(plot.title = element_text(color="black", hjust = 0.5, size= 20), strip.text = element_text(color="black"),
               legend.position = c(0.75, 0.3), legend.background = element_rect(fill="white", color="black"),
               legend.title = element_text(color="black"), legend.text = element_text(color="black"),
-              axis.title.x = element_text(color="black"), axis.title.y = element_text(color="black"),
-              axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  annotate("text", label="*significant accuracy × frequency interaction\n(p = 0.00381)", x=-0.1, y=0.1, size=3.5)
+              axis.title.x = element_text(color="black", size=13), axis.title.y = element_text(color="black", size=13),
+              axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
+              annotate("text", label="*significant accuracy × frequency interaction\n(p = 0.00381)", x=-0.1, y=0.1, size=3.5)
 #ggsave(paste(out_path, "plot4", "_", today, ".png", sep="", collapse=NULL))
 
 interact_plot(modelReadAcc, pred = val_gmc, modx = position)
