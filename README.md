@@ -13,29 +13,21 @@ This research idea dives into these questions by exploring speed and articulatio
 
 
 ## Roadmap
-#### 2022-06 CSS Poster
-Planned submission of poster to the Cognitive Science Society based on analyses 1A and 1B.
-
-#### 2022-10 Paper
-Planned submission of a paper with results based on analyses 1A, 1B, and 2; publication TBD.
+#### 2022-10 SNL Poster
+Poster entitled "" presented at the Society for the Neurobiology of Language.
 
 #### TBD Paper
-Planned submission of a paper with replication results from the lexical decision task.  Date and publication TBD.
+Planned submission of a paper with initial results from the reading task; date and publication TBD.
 
-
-## Contents
-Watch for our first release!
-
-
-## Work in Development
-This `main` branch contains completed releases for this project. For all work-in-progress, please switch over to the `dev` branches.
+#### TBD Paper
+Planned submission of a paper with replication results from the lexical decision task; date and publication TBD.
 
 
 ## Contributors
 | Name | Role |
 | ---  | ---  |
-| Jessica M. Alexander | project lead |
-| Dr. George A. Buzzell | guidance |
+| Jessica M. Alexander | conceptualization, investigation, formal analysis, visualization, project administration |
+| Dr. George A. Buzzell | methodology, resources, supervision |
 
 Learn more about us [here](https://www.ndclab.com/people).
 

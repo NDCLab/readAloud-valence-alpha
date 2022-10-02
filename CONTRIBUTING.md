@@ -24,9 +24,8 @@ readAloud-valence-alpha
 ├── derivatives
 ├── input
 ├── literature
-├── notebook.md
 ├── products
-    ├──product1
+    ├──poster-neurolang2022
           ├──code
           ├──docs
           ├──readme.md
