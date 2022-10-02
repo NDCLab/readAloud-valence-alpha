@@ -1,6 +1,10 @@
-# [Name of Product]
-:point_right: This readme should provide an overview of the product. Replace the placeholder above, as well as this "product1" folder name, with a short name for the actual product.  Replace this text with a brief description.
+### Society for the Neurobiology of Language
+##### October 6-8 | 2022, Philadelphia, PA (USA)
 
-This [poster/paper] was accepted in [INSERT NAME] on [INSERT DATE]. The version in pub_2021-01-01 is the accepted and proofed version of the publication.
+This poster was presented at SNL2022.
 
-:point_right: Update the acceptance date in the folder name itself, and in the text above (twice). Insert the name of the outlet and specify poster or paper. Then delete these instructions.
+- `code` contains the analyses and plots of the results
+- `docs` contains the poster  itself
+- `results` contains the poster graphics
+
+(Note: graphics depicting the stimuli are housed in the [dataset repository](https://github.com/NDCLab/readAloud-valence-dataset).)
