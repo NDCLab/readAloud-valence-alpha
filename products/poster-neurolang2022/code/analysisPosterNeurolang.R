@@ -473,8 +473,8 @@ summary(modelReadAcc)
 
 interact_plot(modelReadAcc, pred = freq_gmc, modx = position,
               plot.points = TRUE, jitter=0.01, point.alpha=0.1, colors=c("#dd5e66", "#0d0887"), interval=TRUE, vary.lty=FALSE,
-              main.title = "Effect of Word Frequency and Passage\nPosition on Content Question Accuracy (%)",
-              x.label="Average Log Frequency (centered)", y.label="Content Question Accuracy",
+              main.title = "Effect of Word Frequency and Passage\nPosition on Content Question Accuracy",
+              x.label="Average Log Frequency (centered)", y.label="Content Question Accuracy (%)",
               legend.main = "Passage Position", modx.labels = c("Postswitch", "Preswitch")) +
               theme(plot.title = element_text(color="black", hjust = 0.5, size= 20), strip.text = element_text(color="black"),
               legend.position = c(0.75, 0.3), legend.background = element_rect(fill="white", color="black"),
