@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analyses
 # Author: Jessica M. Alexander
-# Last Updated: 2022-10-02
+# Last Updated: 2022-10-03
 
 ### SECTION 1: SETTING UP
 library(ggplot2)
@@ -270,7 +270,7 @@ interact_plot(modelReadSpeed, pred = freq_gmc, modx = position,
               legend.position = c(0.82, 0.15), legend.background = element_rect(fill="white", color="black"),
               axis.title.x = element_text(color="black", size=13), axis.title.y = element_text(color="black", size=13),
               axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
-              annotate("text", label="*significant frequency × position (pre/post) interaction\n(p < 0.001)", x=-0.1, y=1.8, size=3.5)
+              annotate("text", label="*significant frequency × position interaction\n(p < 0.001)", x=-0.1, y=1.8, size=3.5)
 #ggsave(paste(out_path, "plot1", "_", today, ".png", sep="", collapse=NULL))
 
 interact_plot(modelReadSpeed, pred = freq_gmc, modx = val_gmc, plot.points = TRUE, jitter=0.01,
@@ -282,7 +282,7 @@ interact_plot(modelReadSpeed, pred = freq_gmc, modx = val_gmc, plot.points = TRU
               legend.position = c(0.8, 0.17), legend.background = element_rect(fill="white", color="black"),
               axis.title.x = element_text(color="black", size=13), axis.title.y = element_text(color="black", size=13),
               axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
-  annotate("text", label="*significant valence × frequency interaction\n(p < 0.001)", x=-0.1, y=1.8, size=3.5)
+              annotate("text", label="*significant valence × frequency interaction\n(p < 0.001)", x=-0.1, y=1.8, size=3.5)
 #ggsave(paste(out_path, "plot2", "_", today, ".png", sep="", collapse=NULL))
 
 
@@ -473,15 +473,15 @@ summary(modelReadAcc)
 
 interact_plot(modelReadAcc, pred = freq_gmc, modx = position,
               plot.points = TRUE, jitter=0.01, point.alpha=0.1, colors=c("#dd5e66", "#0d0887"), interval=TRUE, vary.lty=FALSE,
-              main.title = "Effect of Word Frequency and Passage\nPosition on Content Question Accuracy",
-              x.label="Average Log Frequency (centered)", y.label="Challenge Accuracy",
+              main.title = "Effect of Word Frequency and Passage\nPosition on Content Question Accuracy (%)",
+              x.label="Average Log Frequency (centered)", y.label="Content Question Accuracy",
               legend.main = "Passage Position", modx.labels = c("Postswitch", "Preswitch")) +
               theme(plot.title = element_text(color="black", hjust = 0.5, size= 20), strip.text = element_text(color="black"),
               legend.position = c(0.75, 0.3), legend.background = element_rect(fill="white", color="black"),
               legend.title = element_text(color="black"), legend.text = element_text(color="black"),
               axis.title.x = element_text(color="black", size=13), axis.title.y = element_text(color="black", size=13),
               axis.text.x = element_text(color="black", size=10), axis.text.y = element_text(color="black", size=10)) +
-              annotate("text", label="*significant accuracy × frequency interaction\n(p = 0.00381)", x=-0.1, y=0.1, size=3.5)
+              annotate("text", label="*significant frequency × position interaction\n(p = 0.00381)", x=-0.1, y=0.1, size=3.5)
 #ggsave(paste(out_path, "plot4", "_", today, ".png", sep="", collapse=NULL))
 
 interact_plot(modelReadAcc, pred = val_gmc, modx = position)
