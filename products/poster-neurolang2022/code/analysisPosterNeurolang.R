@@ -225,6 +225,7 @@ timeDatTrim$val_gmc <- timeDatTrim$val - mean(timeDatTrim$val)
 
 
 #MAIN VISUAL PLOT
+#gratitude to Zhechen Guo for sharing the code that served as inspiration for this plot (https://osf.io/9v7k4/)
 timeDatTrimPlot <- timeDatTrim
 levels(timeDatTrimPlot$position) <- list(Preswitch = "preswitch", Postswitch = "postswitch")
 pd1 <- position_dodge(0.2)
