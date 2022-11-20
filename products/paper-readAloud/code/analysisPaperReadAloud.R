@@ -314,7 +314,7 @@ sim_slopes(modelReadAccJN, pred = posi, modx = val_gmc, jnplot = TRUE, cond.int=
 sim_slopes(modelReadAccJN, pred = val_gmc, modx = posi, jnplot = TRUE, cond.int=TRUE)
 
 
-
+#output combo plot
 comboPlot <- grid.arrange(figure3a, figure3b, ncol=2)
 ggsave(paste(out_path, "figure3", "_", today, ".png", sep="", collapse=NULL),
        arrangeGrob(comboPlot))
