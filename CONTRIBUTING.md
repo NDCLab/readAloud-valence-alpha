@@ -19,25 +19,23 @@ Please see the roadmap available on the [README.md](README.md) file of this repo
 ```yml
 readAloud-valence-alpha
 ├── code
-├── containers
 ├── CONTRIBUTING.md
 ├── derivatives
 ├── input
 ├── literature
 ├── products
+    ├──paper-readAloud
+          ├──code
+          ├──docs
+          ├──readme.md
+          ├──results
     ├──poster-neurolang2022
           ├──code
           ├──docs
           ├──readme.md
           ├──results
 ├── README.md
-├── results
-    ├──figures
-    ├──statistics
 ```
-
-### Container
-To ensure reproducibility of results and software, a default docker file and singularity container are included with this template repository. The respective [README.md](README.md) contains a comprehensive guide on how to get started with the dockerfile. A step-by-step guide to getting started also included in the following [video](https://www.youtube.com/watch?v=oO8n3y23b6M). 
 
 
 ## Workflow
