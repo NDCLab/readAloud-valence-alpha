@@ -1,7 +1,6 @@
-### Preprint
-##### TITLE
+### Emotional Context and Predictability in Naturalistic Reading Aloud
 
-This preprint is available at: LINK.
+This preprint is available on [PsyArXiv](https://psyarxiv.com/dh8vp).
 
 - `code` contains the analyses and plots of the results
 - `docs` contains the manuscript
