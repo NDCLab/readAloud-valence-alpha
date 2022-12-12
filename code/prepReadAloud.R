@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analysis Preparation
 # Author: Jessica M. Alexander
-# Last Updated: 2022-11-20
+# Last Updated: 2022-12-12
 
 ### SECTION 1: SETTING UP
 library(readxl)
@@ -31,17 +31,48 @@ passdat$passage <- c("dams", "flying", "bats", "broccoli", "realty", "bees", "do
                      "mantis", "dentist") #rename passages with short-name
 readDat <- read.csv(readDat_path, na.strings='N') #passage-level characteristics from analysisStimuli.R
 
+#replace numerical values for biological sex with text description
+for(a in 1:nrow(redcap)){
+  if(is.na(redcap$demo_b_sex_s1_r1_e1[a])){redcap$sex[a] <- 'undisclosed'}
+  else if(redcap$demo_b_sex_s1_r1_e1[a]==1){redcap$sex[a] <- 'male'}
+  else if(redcap$demo_b_sex_s1_r1_e1[a]==2){redcap$sex[a] <- 'female'}
+  else if(redcap$demo_b_sex_s1_r1_e1[a]==3){redcap$sex[a] <- 'intersex'}
+  else if(redcap$demo_b_sex_s1_r1_e1[a]==4){redcap$sex[a] <- 'other'}
+  else if(redcap$demo_b_sex_s1_r1_e1[a]==5){redcap$sex[a] <- 'unknown'}
+  else{redcap$sex[a] <- 'undisclosed'}
+}
+
+#replace numerical values for preferred pronouns with text description
+for(b in 1:nrow(redcap)){
+  if(is.na(redcap$demo_b_pronouns_s1_r1_e1[b])){redcap$pron2[b] <- 'undisclosed'}
+  else if(redcap$demo_b_pronouns_s1_r1_e1[b]==1){redcap$pron2[b] <- 'she/her'}
+  else if(redcap$demo_b_pronouns_s1_r1_e1[b]==2){redcap$pron2[b] <- 'he/him'}
+  else if(redcap$demo_b_pronouns_s1_r1_e1[b]==3){redcap$pron2[b] <- 'they/them'}
+  else if(redcap$demo_b_pronouns_s1_r1_e1[b]==5){redcap$pron2[b] <- 'other'}
+  else{redcap$pron2[b] <- 'undisclosed'}
+}
+
 #consolidate ethnicity affiliation question from redcap
-for(i in 1:nrow(redcap)){
-  if(redcap$demo_b_ethnic_s1_r1_e1___1[i]==1){redcap$ethnic[i] <- 'AI'} #american indian/alaska native
-  else if(redcap$demo_b_ethnic_s1_r1_e1___2[i]==1){redcap$ethnic[i] <- 'A'} #asian
-  else if(redcap$demo_b_ethnic_s1_r1_e1___3[i]==1){redcap$ethnic[i] <- 'AA'} #african american
-  else if(redcap$demo_b_ethnic_s1_r1_e1___4[i]==1){redcap$ethnic[i] <- 'LX'} #hispanic/latinx
-  else if(redcap$demo_b_ethnic_s1_r1_e1___5[i]==1){redcap$ethnic[i] <- 'ME'} #middle eastern
-  else if(redcap$demo_b_ethnic_s1_r1_e1___6[i]==1){redcap$ethnic[i] <- 'PI'} #pacific islander
-  else if(redcap$demo_b_ethnic_s1_r1_e1___7[i]==1){redcap$ethnic[i] <- 'W'} #white
-  else if(redcap$demo_b_ethnic_s1_r1_e1___8[i]==1){redcap$ethnic[i] <- 'O'} #other
-  else{redcap$ethnic[i] <- 'UND'} #undisclosed
+for(c in 1:nrow(redcap)){
+  if(redcap$demo_b_ethnic_s1_r1_e1___1[c]==1){redcap$ethnic[c] <- 'AI'} #american indian/alaska native
+  else if(redcap$demo_b_ethnic_s1_r1_e1___2[c]==1){redcap$ethnic[c] <- 'A'} #asian
+  else if(redcap$demo_b_ethnic_s1_r1_e1___3[c]==1){redcap$ethnic[c] <- 'AA'} #african american
+  else if(redcap$demo_b_ethnic_s1_r1_e1___4[c]==1){redcap$ethnic[c] <- 'LX'} #hispanic/latinx
+  else if(redcap$demo_b_ethnic_s1_r1_e1___5[c]==1){redcap$ethnic[c] <- 'ME'} #middle eastern
+  else if(redcap$demo_b_ethnic_s1_r1_e1___6[c]==1){redcap$ethnic[c] <- 'PI'} #pacific islander
+  else if(redcap$demo_b_ethnic_s1_r1_e1___7[c]==1){redcap$ethnic[c] <- 'W'} #white
+  else if(redcap$demo_b_ethnic_s1_r1_e1___8[c]==1){redcap$ethnic[c] <- 'O'} #other
+  else{redcap$ethnic[c] <- 'UND'} #undisclosed
+}
+
+#replace numerical values for social class affiliation with text description
+for(d in 1:nrow(redcap)){
+  if(is.na(redcap$demo_b_socclass_s1_r1_e1[d])){redcap$socclass[d] <- 'undisclosed'}
+  else if(redcap$demo_b_socclass_s1_r1_e1[d]==1){redcap$socclass[d] <- 'poor'}
+  else if(redcap$demo_b_socclass_s1_r1_e1[d]==2){redcap$socclass[d] <- 'working'}
+  else if(redcap$demo_b_socclass_s1_r1_e1[d]==3){redcap$socclass[d] <- 'middle'}
+  else if(redcap$demo_b_socclass_s1_r1_e1[d]==4){redcap$socclass[d] <- 'affluent'}
+  else{redcap$socclass[d] <- 'undisclosed'}
 }
 
 #add ids for three participants who met inclusion criteria but were not timestamped due to low challenge accuracy
@@ -63,10 +94,11 @@ for(i in 1:nrow(df)){
   lenSyllPos <- passchar$lenSYLLpos[match(df$passage[i], passchar$passage)] #number of syllables in positive passage half
   lenSyllNeg <- passchar$lenSYLLneg[match(df$passage[i], passchar$passage)] #number of syllables in negative passage half
   df$challengeACC[i] <- passdat[match(passage, passdat$passage), match(subject, colnames(passdat))] #passage-specific challenge question accuracy for subject
-  df$pronouns[i] <- redcap$demo_b_pronouns_s1_r1_e1[match(df$id[i], redcap$record_id)]   #participant preferred pronouns
-  if(redcap$demo_b_sex_s1_r1_e1[match(df$id[i], redcap$record_id)]==1){df$sex[i] <- "male"}else{df$sex[i] <- "female"}   #participant biological sex
+  df$sex[i] <- redcap$sex[match(df$id[i], redcap$record_id)]   #participant biological sex
+  df$pronouns[i] <- redcap$pron2[match(df$id[i], redcap$record_id)]   #participant preferred pronouns
   df$yob[i] <- redcap$demo_b_yob_s1_r1_e1[match(df$id[i], redcap$record_id)] #participant year of birth
   df$ethnic[i] <- redcap$ethnic[match(df$id[i], redcap$record_id)] #participant ethnic group affiliation
+  df$socclass[i] <- redcap$socclass[match(df$id[i], redcap$record_id)]   #participant social class identification
   df$eng[i] <- redcap$demo_b_eng_s1_r1_e1[match(df$id[i], redcap$record_id)] #participant monolingualism
   df$langhis[i] <- redcap$demo_b_langhis_s1_r1_e1[match(df$id[i], redcap$record_id)] #participant language history
   df$ageen[i] <- redcap$demo_b_ageen_s1_r1_e1[match(df$id[i], redcap$record_id)] #participant age of English acquisition
@@ -97,8 +129,10 @@ df$speedDelta <- abs(df$speedFirst - df$speedSecond)
 
 #organize participant demographic variables
 df$sex <- as.factor(df$sex)
+df$pronouns <- as.factor(df$pronouns)
 df$age <- 2022 - as.numeric(df$yob)
 df$ethnic <- as.factor(df$ethnic)
+df$socclass <- as.factor(df$socclass)
 
 
 ### SECTION 3: TRIM PARTICIPANTS WHO DID NOT MEET EXCLUSION CRITERIA
@@ -111,8 +145,13 @@ dfTrim <- subset(dfTrim, dfTrim$commdis==0) #remove if diagnosed with communicat
 summary(dfTrim$age)
 sd(dfTrim$age)
 summary(dfTrim$sex)/20
+summary(dfTrim$sex)/20/sum(summary(dfTrim$sex)/20)
+summary(dfTrim$pronouns)/20
+summary(dfTrim$pronouns)/20/sum(summary(dfTrim$sex)/20)
 summary(dfTrim$ethnic)/20
 summary(dfTrim$ethnic)/20/sum(summary(dfTrim$sex)/20)
+summary(dfTrim$socclass)/20
+summary(dfTrim$socclass)/20/sum(summary(dfTrim$sex)/20)
 
 
 ### SECTION 4: TRIM PASSAGES DUE TO EXPERIMENTER ERROR
