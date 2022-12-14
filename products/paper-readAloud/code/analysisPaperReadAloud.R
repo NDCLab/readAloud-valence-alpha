@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analyses
 # Author: Jessica M. Alexander
-# Last Updated: 2022-12-12
+# Last Updated: 2022-12-13
 
 ### SECTION 1: SETTING UP
 library(dplyr)
@@ -162,6 +162,7 @@ summary(speedDatStats$socclass)/sum(summary(speedDatStats$sex))
 #model
 modelReadSpeed <- lmerTest::lmer(speed ~ position * freq_gmc * val_gmc + (1|id) + (1|passage), data=speedDat, REML=TRUE)
 summary(modelReadSpeed)
+confint(modelReadSpeed, method="boot", oldNames=FALSE)
 
 #create df and model for Johnson-Neyman intervals, which requires numeric (not factor) predictors
 speedDatJN <- speedDat
@@ -307,6 +308,7 @@ summary(challengeDatStats$socclass)
 #model
 modelReadAcc <- glmer(challengeACC ~ position * val_gmc * freq_gmc + (1|id) + (1|passage), data=challengeDat, family="binomial")
 summary(modelReadAcc)
+confint(modelReadAcc, method="boot", oldNames=FALSE)
 
 #plots
 figure3b <- interact_plot(modelReadAcc, pred = freq_gmc, modx = position,
