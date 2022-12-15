@@ -31,7 +31,7 @@ df$pronouns <- as.factor(df$pronouns)
 df$ethnic <- as.factor(df$ethnic)
 df$socclass <- as.factor(df$socclass)
 
-#extract age and sex stats
+#extract demo stats
 summary(df$age)
 sd(df$age)
 summary(df$sex)/19
@@ -146,7 +146,7 @@ contrasts(speedDat$position) <- contr.sum(2) #preswitch position: -1, postswitch
 speedDat$freq_gmc <- speedDat$freq - mean(speedDat$freq)
 speedDat$val_gmc <- speedDat$val - mean(speedDat$val)
 
-#extract age and sex stats
+#extract demo stats
 speedDatStats <- subset(speedDat, !duplicated(speedDat$id))
 summary(speedDatStats$age)
 sd(speedDatStats$age)
@@ -297,7 +297,7 @@ challengeDat$val_gmc <- challengeDat$val - mean(challengeDat$val)
 #modify contrasts for dependent variables
 contrasts(challengeDat$position) <- contr.sum(2) #preswitch position: -1, postswitch position: +1
 
-#extract age and sex stats (qc check)
+#extract demo stats (qc check)
 challengeDatStats <- subset(challengeDat, !duplicated(challengeDat$id))
 summary(challengeDatStats$age)
 summary(challengeDatStats$sex)
