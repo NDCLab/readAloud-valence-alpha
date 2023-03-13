@@ -16,8 +16,8 @@ Texts are designed to be heavy on emotional words, allowing performance to be an
 #### 2022-10 SNL Poster
 Poster entitled "Effects of Lexical Valence and Emotional (In)Congruency in Naturalistic Reading Aloud" presented at the Society for the Neurobiology of Language in Philadelphia, PA (USA).
 
-#### TBD Paper
-Planned submission of a paper with initial results from the reading task; date and publication TBD.
+#### 2022-11 Preprint
+Preprint available on [PsyArXiv](https://psyarxiv.com/dh8vp/).
 
 #### TBD Paper
 Planned submission of a paper with replication results from the lexical decision task; date and publication TBD.

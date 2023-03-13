@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analyses
 # Author: Jessica M. Alexander
-# Last Updated: 2022-11-16
+# Last Updated: 2022-12-13
 
 ### SECTION 1: SETTING UP
 library(dplyr)
@@ -19,7 +19,7 @@ today <- Sys.Date()
 today <- format(today, "%Y%m%d")
 
 #set up directories for input/output data
-data <- '/Users/jalexand/github/readAloud-valence-alpha/derivatives/readAloudData_20221102.csv'
+data <- '/Users/jalexand/github/readAloud-valence-alpha/derivatives/readAloudData_20221212.csv'
 out_path <- '/Users/jalexand/github/readAloud-valence-alpha/products/paper-readAloud/results/'
 
 #read in data
@@ -27,14 +27,21 @@ df <- read.csv(data)
 
 #organize participant demographic variables
 df$sex <- as.factor(df$sex)
+df$pronouns <- as.factor(df$pronouns)
 df$ethnic <- as.factor(df$ethnic)
+df$socclass <- as.factor(df$socclass)
 
-#extract age and sex stats
+#extract demo stats
 summary(df$age)
 sd(df$age)
 summary(df$sex)/19
+summary(df$sex)/19/sum(summary(df$sex)/19)
+summary(df$pronouns)/19
+summary(df$pronouns)/19/sum(summary(df$sex)/19)
 summary(df$ethnic)/19
 summary(df$ethnic)/19/sum(summary(df$sex)/19)
+summary(df$socclass)/19
+summary(df$socclass)/19/sum(summary(df$sex)/19)
 
 #remove participants whose challenge question accuracy below 50%
 dfTrim <- df
@@ -99,14 +106,16 @@ passage_no_before_trimming - passage_no_after_trim2 #number of passages trimmed
 (passage_no_before_trimming - passage_no_after_trim2) / passage_no_before_trimming #percentage of passages trimmed
 
 #transition data to long format
-speedDat <- data.frame(matrix(ncol=10, nrow=0))
-colnames(speedDat) <- c("passage", "switchType", "id", "position", "speed", "freq", "val", "sex", "age", "ethnic")
+speedDat <- data.frame(matrix(ncol=12, nrow=0))
+colnames(speedDat) <- c("passage", "switchType", "id", "position", "speed", "freq", "val", "sex", "pronouns", "age", "ethnic", "socclass")
 for(j in 1:nrow(dfTrim_speed)){
   passage <- dfTrim_speed$passage[j]
   id <- dfTrim_speed$id[j]
   sex <- as.character(dfTrim_speed$sex[j])
+  pronouns <- as.character(dfTrim_speed$pronouns[j])
   age <- dfTrim_speed$age[j]
   ethnic <- as.character(dfTrim_speed$ethnic[j])
+  socclass <- as.character(dfTrim_speed$socclass[j])
   switchType <- dfTrim_speed$switch[j]
   speedFirst <- dfTrim_speed$speedFirst[j]
   speedSecond <- dfTrim_speed$speedSecond[j]
@@ -114,8 +123,8 @@ for(j in 1:nrow(dfTrim_speed)){
   freqSecond <- dfTrim_speed$freqSecond[j]
   valFirst <- dfTrim_speed$valFirst[j]
   valSecond <- dfTrim_speed$valSecond[j]
-  speedDat[nrow(speedDat) + 1,] <-c(passage, switchType, id, "preswitch", speedFirst, freqFirst, valFirst, sex, age, ethnic)
-  speedDat[nrow(speedDat) + 1,] <-c(passage, switchType, id, "postswitch", speedSecond, freqSecond, valSecond, sex, age, ethnic)
+  speedDat[nrow(speedDat) + 1,] <-c(passage, switchType, id, "preswitch", speedFirst, freqFirst, valFirst, sex, pronouns, age, ethnic, socclass)
+  speedDat[nrow(speedDat) + 1,] <-c(passage, switchType, id, "postswitch", speedSecond, freqSecond, valSecond, sex, pronouns, age, ethnic, socclass)
 }
 
 #organize data types
@@ -125,8 +134,10 @@ speedDat$val <- as.numeric(speedDat$val)
 speedDat$position <- as.factor(speedDat$position)
 speedDat$switchType <- as.factor(speedDat$switchType)
 speedDat$sex <- as.factor(speedDat$sex)
+speedDat$pronouns <- as.factor(speedDat$pronouns)
 speedDat$age <- as.numeric(speedDat$age)
 speedDat$ethnic <- as.factor(speedDat$ethnic)
+speedDat$socclass <- as.factor(speedDat$socclass)
 
 #modify contrasts for categorical predictor
 contrasts(speedDat$position) <- contr.sum(2) #preswitch position: -1, postswitch position: +1
@@ -135,15 +146,23 @@ contrasts(speedDat$position) <- contr.sum(2) #preswitch position: -1, postswitch
 speedDat$freq_gmc <- speedDat$freq - mean(speedDat$freq)
 speedDat$val_gmc <- speedDat$val - mean(speedDat$val)
 
-#extract age and sex stats
+#extract demo stats
 speedDatStats <- subset(speedDat, !duplicated(speedDat$id))
 summary(speedDatStats$age)
+sd(speedDatStats$age)
 summary(speedDatStats$sex)
+summary(speedDatStats$sex)/sum(summary(speedDatStats$sex))
+summary(speedDatStats$pronouns)
+summary(speedDatStats$pronouns)/sum(summary(speedDatStats$sex))
 summary(speedDatStats$ethnic)
+summary(speedDatStats$ethnic)/sum(summary(speedDatStats$sex))
+summary(speedDatStats$socclass)
+summary(speedDatStats$socclass)/sum(summary(speedDatStats$sex))
 
 #model
 modelReadSpeed <- lmerTest::lmer(speed ~ position * freq_gmc * val_gmc + (1|id) + (1|passage), data=speedDat, REML=TRUE)
 summary(modelReadSpeed)
+confint(modelReadSpeed, method="boot", oldNames=FALSE)
 
 #create df and model for Johnson-Neyman intervals, which requires numeric (not factor) predictors
 speedDatJN <- speedDat
@@ -229,14 +248,16 @@ cvd_grid(figure4) #test contrasts
 dfTrim_acc <- dfTrim
 
 #transition data to long format
-challengeDat <- data.frame(matrix(ncol=11, nrow=0))
-colnames(challengeDat) <- c("passage", "switchType", "id", "age", "sex", "ethnic", "position", "challengeACC", "challengeSource", "freq", "val")
+challengeDat <- data.frame(matrix(ncol=13, nrow=0))
+colnames(challengeDat) <- c("passage", "switchType", "id", "age", "sex", "pronouns", "ethnic", "socclass", "position", "challengeACC", "challengeSource", "freq", "val")
 for(j in 1:nrow(dfTrim_acc)){
   passage <- dfTrim_acc$passage[j]
   id <- dfTrim_acc$id[j]
   age <- dfTrim_acc$age[j]
   sex <- as.character(dfTrim_acc$sex[j])
+  pronouns <- as.character(dfTrim_acc$pronouns[j])
   ethnic <- as.character(dfTrim_acc$ethnic[j])
+  socclass <- as.character(dfTrim_acc$socclass[j])
   challengeACC <- dfTrim_acc$challengeACC[j]
   questionVal <- dfTrim_acc$questionVal[j]
   switchType <- dfTrim_acc$switch[j]
@@ -250,8 +271,8 @@ for(j in 1:nrow(dfTrim_acc)){
   freqSecond <- dfTrim_acc$freqSecond[j]
   valFirst <- dfTrim_acc$valFirst[j]
   valSecond <- dfTrim_acc$valSecond[j]
-  challengeDat[nrow(challengeDat) + 1,] <-c(passage, switchType, id, age, sex, ethnic, "preswitch", challengeACC, challengeFirst, freqFirst, valFirst)
-  challengeDat[nrow(challengeDat) + 1,] <-c(passage, switchType, id, age, sex, ethnic, "postswitch", challengeACC, challengeSecond, freqSecond, valSecond)
+  challengeDat[nrow(challengeDat) + 1,] <-c(passage, switchType, id, age, sex, pronouns, ethnic, socclass, "preswitch", challengeACC, challengeFirst, freqFirst, valFirst)
+  challengeDat[nrow(challengeDat) + 1,] <-c(passage, switchType, id, age, sex, pronouns, ethnic, socclass, "postswitch", challengeACC, challengeSecond, freqSecond, valSecond)
 }
 
 #organize data types
@@ -262,7 +283,9 @@ challengeDat$position <- as.factor(challengeDat$position)
 challengeDat$switchType <- as.factor(challengeDat$switchType)
 challengeDat$age <- as.numeric(challengeDat$age)
 challengeDat$sex <- as.factor(challengeDat$sex)
+challengeDat$pronouns <- as.factor(challengeDat$pronouns)
 challengeDat$ethnic <- as.factor(challengeDat$ethnic)
+challengeDat$socclass <- as.factor(challengeDat$socclass)
 
 #trim passages
 challengeDat <- subset(challengeDat, challengeDat$challengeSource==TRUE) #limit to passage halves that included the challenge question answer
@@ -274,15 +297,18 @@ challengeDat$val_gmc <- challengeDat$val - mean(challengeDat$val)
 #modify contrasts for dependent variables
 contrasts(challengeDat$position) <- contr.sum(2) #preswitch position: -1, postswitch position: +1
 
-#extract age and sex stats
+#extract demo stats (qc check)
 challengeDatStats <- subset(challengeDat, !duplicated(challengeDat$id))
 summary(challengeDatStats$age)
 summary(challengeDatStats$sex)
+summary(challengeDatStats$pronouns)
 summary(challengeDatStats$ethnic)
+summary(challengeDatStats$socclass)
 
 #model
 modelReadAcc <- glmer(challengeACC ~ position * val_gmc * freq_gmc + (1|id) + (1|passage), data=challengeDat, family="binomial")
 summary(modelReadAcc)
+confint(modelReadAcc, method="boot", oldNames=FALSE)
 
 #plots
 figure3b <- interact_plot(modelReadAcc, pred = freq_gmc, modx = position,
