@@ -19,8 +19,8 @@ Poster entitled "Effects of Lexical Valence and Emotional (In)Congruency in Natu
 #### 2022-11 Preprint
 Preprint available on [PsyArXiv](https://psyarxiv.com/dh8vp/).
 
-#### TBD Paper
-Planned submission of a paper with replication results from the lexical decision task; date and publication TBD.
+#### 2023-09 Emotion Article
+Article, including supplementary materials, published in the APA journal 'Emotion': [http://doi.org/10.1037/emo0001298](http://doi.org/10.1037/emo0001298)
 
 
 ## Contributors
