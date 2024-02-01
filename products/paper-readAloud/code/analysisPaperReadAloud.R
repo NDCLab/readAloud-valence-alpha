@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analyses
 # Author: Jessica M. Alexander
-# Last Updated: 2023-06-30
+# Last Updated: 2024-02-01
 
 # INPUTS
 # data/df: behavioral data, for each participant on each passage, with relevant participant information and trial-level stimulus information
@@ -29,7 +29,7 @@ today <- Sys.Date()
 today <- format(today, "%Y%m%d")
 
 #set up directories for input/output data
-data <- '/Users/jalexand/github/readAloud-valence-alpha/derivatives/readAloudData_20230615.csv'
+data <- '/Users/jalexand/github/readAloud-valence-alpha/derivatives/readAloudData_20240201.csv'
 out_path <- '/Users/jalexand/github/readAloud-valence-alpha/products/paper-readAloud/results/'
 
 #read in data

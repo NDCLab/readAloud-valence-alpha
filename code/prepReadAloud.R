@@ -1,6 +1,6 @@
 # readAloud-valence-alpha Reading Task Analysis Preparation
 # Author: Jessica M. Alexander
-# Last Updated: 2023-06-15
+# Last Updated: 2024-02-01
 
 # INPUTS
 # data/df: behavioral data, for each participant on each passage, incl. time spent reading (each half) and F0 mean/sd (each half)
@@ -83,9 +83,13 @@ for(b in 1:nrow(redcap)){
   else{demoDat$pron[b] <- 'undisclosed'}
 }
 
-#ethnicity affiliation: map to text description
+#race/ethnicity affiliation: map to text description
+redcap$numEthResp <- rowSums(redcap[,c("demo_b_ethnic_s1_r1_e1___1", "demo_b_ethnic_s1_r1_e1___2", "demo_b_ethnic_s1_r1_e1___3",
+                                       "demo_b_ethnic_s1_r1_e1___4", "demo_b_ethnic_s1_r1_e1___5", "demo_b_ethnic_s1_r1_e1___6",
+                                       "demo_b_ethnic_s1_r1_e1___7", "demo_b_ethnic_s1_r1_e1___8")]) #sum across columns to identify participants identifying as multiracial
 for(c in 1:nrow(redcap)){
-  if(redcap$demo_b_ethnic_s1_r1_e1___1[c]==1){demoDat$ethnic[c] <- 'AI'} #american indian/alaska native
+  if(redcap$numEthResp[c]>1){demoDat$ethnic[c] <- 'M'} #multiple options selected
+  else if(redcap$demo_b_ethnic_s1_r1_e1___1[c]==1){demoDat$ethnic[c] <- 'AI'} #american indian/alaska native
   else if(redcap$demo_b_ethnic_s1_r1_e1___2[c]==1){demoDat$ethnic[c] <- 'A'} #asian
   else if(redcap$demo_b_ethnic_s1_r1_e1___3[c]==1){demoDat$ethnic[c] <- 'AA'} #african american
   else if(redcap$demo_b_ethnic_s1_r1_e1___4[c]==1){demoDat$ethnic[c] <- 'LX'} #hispanic/latinx
